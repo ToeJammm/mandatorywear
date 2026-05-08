@@ -18,6 +18,8 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
     settings?.dropDate ? new Date(settings.dropDate).toISOString().slice(0, 16) : ""
   );
   const [dropActive, setDropActive] = useState(settings?.dropActive ?? false);
+  const [emailSubject, setEmailSubject] = useState(settings?.emailSubject ?? "");
+  const [emailBody, setEmailBody] = useState(settings?.emailBody ?? "");
   const [saving, setSaving] = useState(false);
   const [notifying, setNotifying] = useState(false);
   const [showForm, setShowForm] = useState(false);
@@ -44,6 +46,8 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
       body: JSON.stringify({
         dropDate: dropDate || null,
         dropActive,
+        emailSubject,
+        emailBody,
       }),
     });
     setSaving(false);
@@ -187,6 +191,33 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
                 />
                 {dropActive ? "Shop is LIVE" : "Countdown Mode"}
               </button>
+            </div>
+          </div>
+
+          {/* Email content */}
+          <div className="flex flex-col gap-4 pt-2 border-t border-[#4b5320]/20">
+            {label("Drop Email")}
+            <div className="flex flex-col gap-2">
+              {label("Subject")}
+              <input
+                type="text"
+                value={emailSubject}
+                onChange={(e) => setEmailSubject(e.target.value)}
+                placeholder="THE DROP IS LIVE"
+                className="bg-transparent border border-[#4b5320]/40 px-4 py-2.5 text-sm text-[#f4f1eb] outline-none focus:border-[#4b5320] transition-colors placeholder-[#f4f1eb]/20"
+                style={{ fontFamily: "var(--font-oswald)" }}
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              {label("Body")}
+              <textarea
+                value={emailBody}
+                onChange={(e) => setEmailBody(e.target.value)}
+                placeholder="Limited quantity. First come, first served."
+                rows={4}
+                className="bg-transparent border border-[#4b5320]/40 px-4 py-2.5 text-sm text-[#f4f1eb] outline-none focus:border-[#4b5320] transition-colors placeholder-[#f4f1eb]/20 resize-none"
+                style={{ fontFamily: "var(--font-oswald)" }}
+              />
             </div>
           </div>
 

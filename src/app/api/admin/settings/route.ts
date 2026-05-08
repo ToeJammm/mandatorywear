@@ -8,6 +8,8 @@ import { z } from "zod";
 const schema = z.object({
   dropDate: z.string().nullable().optional(),
   dropActive: z.boolean().optional(),
+  emailSubject: z.string().optional(),
+  emailBody: z.string().optional(),
 });
 
 export async function GET() {
@@ -30,6 +32,8 @@ export async function POST(req: NextRequest) {
 
   const data: Record<string, unknown> = {};
   if (parsed.data.dropActive !== undefined) data.dropActive = parsed.data.dropActive;
+  if (parsed.data.emailSubject !== undefined) data.emailSubject = parsed.data.emailSubject;
+  if (parsed.data.emailBody !== undefined) data.emailBody = parsed.data.emailBody;
   if ("dropDate" in parsed.data) {
     data.dropDate = parsed.data.dropDate ? new Date(parsed.data.dropDate) : null;
   }

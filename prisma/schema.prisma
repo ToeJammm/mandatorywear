@@ -7,10 +7,12 @@ datasource db {
 }
 
 model Settings {
-  id         String    @id @default("main")
-  dropDate   DateTime?
-  dropActive Boolean   @default(false)
-  updatedAt  DateTime  @updatedAt
+  id           String    @id @default("main")
+  dropDate     DateTime?
+  dropActive   Boolean   @default(false)
+  emailSubject String?
+  emailBody    String?
+  updatedAt    DateTime  @updatedAt
 }
 
 model EmailSignup {
