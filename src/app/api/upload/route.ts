@@ -23,17 +23,18 @@ export async function POST(req: NextRequest) {
   const file = formData.get("file") as File | null;
   if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
 
-  let buffer = Buffer.from(await file.arrayBuffer() as ArrayBuffer);
+  const raw = Buffer.from(await file.arrayBuffer() as ArrayBuffer);
+  let uploadBuffer: Buffer | Uint8Array = raw;
   let filename = file.name;
   let contentType = file.type;
 
   if (isHeic(file)) {
-    buffer = await sharp(buffer).jpeg({ quality: 90 }).toBuffer();
+    uploadBuffer = await sharp(raw).jpeg({ quality: 90 }).toBuffer();
     filename = filename.replace(/\.(heic|heif)$/i, ".jpg");
     contentType = "image/jpeg";
   }
 
-  const blob = await put(`products/${Date.now()}-${filename}`, buffer, {
+  const blob = await put(`products/${Date.now()}-${filename}`, uploadBuffer, {
     access: "public",
     contentType,
   });
