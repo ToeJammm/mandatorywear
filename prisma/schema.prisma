@@ -1,0 +1,47 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Settings {
+  id         String    @id @default("main")
+  dropDate   DateTime?
+  dropActive Boolean   @default(false)
+  updatedAt  DateTime  @updatedAt
+}
+
+model PhoneSignup {
+  id        String   @id @default(cuid())
+  phone     String   @unique
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  price       Int
+  quantity    Int      @default(1)
+  isOneOfOne  Boolean  @default(false)
+  sold        Boolean  @default(false)
+  images      String[]
+  active      Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  orders      Order[]
+}
+
+model Order {
+  id              String   @id @default(cuid())
+  stripeSessionId String   @unique
+  customerEmail   String
+  productId       String
+  quantity        Int
+  total           Int
+  status          String   @default("pending")
+  createdAt       DateTime @default(now())
+  product         Product  @relation(fields: [productId], references: [id])
+}
