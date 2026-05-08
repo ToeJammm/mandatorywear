@@ -24,12 +24,14 @@ export async function POST(req: NextRequest) {
   if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
 
   const raw = Buffer.from(await file.arrayBuffer() as ArrayBuffer);
-  let uploadBuffer: Buffer | Uint8Array = raw;
   let filename = file.name;
   let contentType = file.type;
 
+  const uploadBuffer: Buffer = isHeic(file)
+    ? await sharp(raw).jpeg({ quality: 90 }).toBuffer()
+    : raw;
+
   if (isHeic(file)) {
-    uploadBuffer = await sharp(raw).jpeg({ quality: 90 }).toBuffer();
     filename = filename.replace(/\.(heic|heif)$/i, ".jpg");
     contentType = "image/jpeg";
   }
