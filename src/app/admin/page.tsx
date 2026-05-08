@@ -12,7 +12,7 @@ export default async function AdminPage() {
   const [settings, products, signups] = await Promise.all([
     prisma.settings.findUnique({ where: { id: "main" } }),
     prisma.product.findMany({ orderBy: { createdAt: "desc" } }),
-    prisma.phoneSignup.count(),
+    prisma.emailSignup.count(),
   ]);
 
   return <AdminDashboard settings={settings} products={products} signupCount={signups} />;

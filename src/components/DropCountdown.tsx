@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import PhoneSignup from "./PhoneSignup";
+import EmailSignup from "./EmailSignup";
 
 interface Props {
   dropDate: Date | null;
@@ -130,7 +130,7 @@ export default function DropCountdown({ dropDate }: Props) {
           >
             Get notified when we drop
           </p>
-          <PhoneSignup />
+          <EmailSignup />
         </div>
       </div>
     </main>

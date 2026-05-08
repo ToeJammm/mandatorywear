@@ -19,8 +19,22 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
   );
   const [dropActive, setDropActive] = useState(settings?.dropActive ?? false);
   const [saving, setSaving] = useState(false);
+  const [notifying, setNotifying] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editProduct, setEditProduct] = useState<Product | null>(null);
+
+  async function sendNotification() {
+    if (!confirm(`Send drop notification to ${signupCount} subscribers?`)) return;
+    setNotifying(true);
+    const res = await fetch("/api/notify", { method: "POST" });
+    const data = await res.json();
+    if (res.ok) {
+      alert(`Sent to ${data.sent} subscribers.`);
+    } else {
+      alert(data.error ?? "Failed to send.");
+    }
+    setNotifying(false);
+  }
 
   async function saveSettings() {
     setSaving(true);
@@ -101,7 +115,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
         {/* Stats */}
         <div className="grid grid-cols-3 gap-px bg-[#4b5320]/20">
           {[
-            { label: "Signups", value: signupCount },
+            { label: "Subscribers", value: signupCount },
             { label: "Products", value: products.filter((p) => p.active).length },
             { label: "Sold", value: products.filter((p) => p.sold).length },
           ].map(({ label: l, value }) => (
@@ -116,6 +130,26 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
             </div>
           ))}
         </div>
+
+        {/* Notify */}
+        {signupCount > 0 && (
+          <div className="flex items-center justify-between border border-[#4b5320]/20 px-6 py-4">
+            <div>
+              {label("Drop Notification")}
+              <p className="text-[#f4f1eb]/30 text-xs mt-1" style={{ fontFamily: "var(--font-barlow)" }}>
+                Send a live email to all {signupCount} subscriber{signupCount !== 1 ? "s" : ""}
+              </p>
+            </div>
+            <button
+              onClick={sendNotification}
+              disabled={notifying}
+              className="bg-[#4b5320] px-6 py-2.5 text-xs tracking-[0.2em] uppercase text-[#f4f1eb] hover:bg-[#5c6628] transition-colors disabled:opacity-50 cursor-pointer"
+              style={{ fontFamily: "var(--font-black-ops)" }}
+            >
+              {notifying ? "Sending..." : "Send Now"}
+            </button>
+          </div>
+        )}
 
         {/* Drop Settings */}
         <div className="border border-[#4b5320]/20 p-6 flex flex-col gap-6">

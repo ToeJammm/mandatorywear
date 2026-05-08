@@ -13,9 +13,9 @@ model Settings {
   updatedAt  DateTime  @updatedAt
 }
 
-model PhoneSignup {
+model EmailSignup {
   id        String   @id @default(cuid())
-  phone     String   @unique
+  email     String   @unique
   createdAt DateTime @default(now())
 }
 

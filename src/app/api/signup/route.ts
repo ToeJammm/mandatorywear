@@ -5,23 +5,21 @@ import { prisma } from "@/lib/prisma";
 import { z } from "zod";
 
 const schema = z.object({
-  phone: z.string().min(7).max(20),
+  email: z.string().email(),
 });
 
 export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
   const parsed = schema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: "Invalid phone number." }, { status: 400 });
+    return NextResponse.json({ error: "Invalid email address." }, { status: 400 });
   }
 
-  const phone = parsed.data.phone.replace(/\D/g, "");
-
   try {
-    await prisma.phoneSignup.upsert({
-      where: { phone },
+    await prisma.emailSignup.upsert({
+      where: { email: parsed.data.email },
       update: {},
-      create: { phone },
+      create: { email: parsed.data.email },
     });
     return NextResponse.json({ ok: true });
   } catch {
