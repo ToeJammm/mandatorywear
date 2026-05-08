@@ -22,10 +22,28 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
   const [error, setError] = useState("");
   const fileRef = useRef<HTMLInputElement>(null);
 
+  async function convertIfHeic(file: File): Promise<File> {
+    const isHeic =
+      file.type === "image/heic" ||
+      file.type === "image/heif" ||
+      file.name.toLowerCase().endsWith(".heic") ||
+      file.name.toLowerCase().endsWith(".heif");
+
+    if (!isHeic) return file;
+
+    const heic2any = (await import("heic2any")).default;
+    const converted = await heic2any({ blob: file, toType: "image/jpeg", quality: 0.9 });
+    const blob = Array.isArray(converted) ? converted[0] : converted;
+    return new File([blob], file.name.replace(/\.(heic|heif)$/i, ".jpg"), {
+      type: "image/jpeg",
+    });
+  }
+
   async function uploadFiles(files: FileList) {
     setUploading(true);
     const urls: string[] = [];
-    for (const file of Array.from(files)) {
+    for (const raw of Array.from(files)) {
+      const file = await convertIfHeic(raw);
       const fd = new FormData();
       fd.append("file", file);
       const res = await fetch("/api/upload", { method: "POST", body: fd });
