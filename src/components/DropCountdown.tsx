@@ -132,6 +132,17 @@ export default function DropCountdown({ dropDate }: Props) {
           </p>
           <EmailSignup />
         </div>
+
+        {/* Instagram */}
+        <a
+          href="https://www.instagram.com/mandatory_wear/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#f4f1eb]/30 hover:text-[#4b5320] transition-colors text-xs tracking-[0.3em] uppercase"
+          style={{ fontFamily: "var(--font-oswald)" }}
+        >
+          @mandatory_wear
+        </a>
       </div>
     </main>
   );

@@ -31,6 +31,15 @@ export default function ShopGrid({ products }: Props) {
           </span>
           <div className="flex-1 h-px bg-[#4b5320]/40" />
         </div>
+        <a
+          href="https://www.instagram.com/mandatory_wear/"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-[#f4f1eb]/30 hover:text-[#4b5320] transition-colors text-xs tracking-[0.3em] uppercase"
+          style={{ fontFamily: "var(--font-oswald)" }}
+        >
+          @mandatory_wear
+        </a>
       </div>
 
       {/* Grid */}

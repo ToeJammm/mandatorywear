@@ -93,6 +93,17 @@ function dropEmail(siteUrl: string, bodyText: string): string {
           </tr>
 
           <tr>
+            <td align="center" style="padding-bottom:12px;">
+              <a
+                href="https://www.instagram.com/mandatory_wear/"
+                style="color:#4b5320;text-decoration:none;font-size:11px;letter-spacing:0.25em;"
+              >
+                @mandatory_wear
+              </a>
+            </td>
+          </tr>
+
+          <tr>
             <td align="center">
               <p style="margin:0;color:#f4f1eb;opacity:0.2;font-size:11px;letter-spacing:0.2em;">
                 MANDATORY WEAR
