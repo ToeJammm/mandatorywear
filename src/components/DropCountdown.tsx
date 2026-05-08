@@ -41,7 +41,7 @@ export default function DropCountdown({ dropDate }: Props) {
   }, [dropDate]);
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen px-6 py-16 relative overflow-hidden">
+    <main className="flex flex-col items-center justify-center min-h-screen px-6 py-6 sm:py-16 relative overflow-hidden">
       {/* subtle texture overlay */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none"
@@ -51,7 +51,7 @@ export default function DropCountdown({ dropDate }: Props) {
         }}
       />
 
-      <div className="relative z-10 flex flex-col items-center gap-12 max-w-lg w-full">
+      <div className="relative z-10 flex flex-col items-center gap-6 sm:gap-12 max-w-lg w-full">
         {/* Logo */}
         <div className="w-[26rem] sm:w-[32rem]">
           <Image
