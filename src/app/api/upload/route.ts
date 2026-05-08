@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   const file = formData.get("file") as File | null;
   if (!file) return NextResponse.json({ error: "No file" }, { status: 400 });
 
-  let buffer = Buffer.from(await file.arrayBuffer());
+  let buffer = Buffer.from(await file.arrayBuffer() as ArrayBuffer);
   let filename = file.name;
   let contentType = file.type;
 
