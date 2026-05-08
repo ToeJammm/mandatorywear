@@ -25,7 +25,7 @@ export default function ShopGrid({ products }: Props) {
           <div className="flex-1 h-px bg-[#4b5320]/40" />
           <span
             className="text-[#4b5320] text-[10px] tracking-[0.4em] uppercase"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             Now Available
           </span>
@@ -37,7 +37,7 @@ export default function ShopGrid({ products }: Props) {
       {products.length === 0 ? (
         <p
           className="text-center text-[#f4f1eb]/40 tracking-widest uppercase"
-          style={{ fontFamily: "var(--font-barlow)" }}
+          style={{ fontFamily: "var(--font-oswald)" }}
         >
           No items yet.
         </p>
@@ -71,7 +71,7 @@ function ProductCard({ product }: { product: Product }) {
           />
         ) : (
           <div className="w-full h-full flex items-center justify-center">
-            <span className="text-[#4b5320]/30 text-xs tracking-widest uppercase" style={{ fontFamily: "var(--font-barlow)" }}>
+            <span className="text-[#4b5320]/30 text-xs tracking-widest uppercase" style={{ fontFamily: "var(--font-oswald)" }}>
               No image
             </span>
           </div>
@@ -90,7 +90,7 @@ function ProductCard({ product }: { product: Product }) {
           {isSoldOut && (
             <span
               className="bg-[#0a0a0a] border border-[#f4f1eb]/20 text-[#f4f1eb]/60 text-[10px] tracking-[0.2em] px-2 py-0.5 uppercase"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             >
               Sold
             </span>
@@ -109,14 +109,14 @@ function ProductCard({ product }: { product: Product }) {
         <div className="flex justify-between items-center mt-1">
           <span
             className="text-[#4b5320] text-sm"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             ${(product.price / 100).toFixed(2)}
           </span>
           {!product.isOneOfOne && !isSoldOut && (
             <span
               className="text-[#f4f1eb]/30 text-xs tracking-widest"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             >
               {product.quantity} left
             </span>

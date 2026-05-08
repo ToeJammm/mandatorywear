@@ -46,7 +46,7 @@ export default function PhoneSignup() {
           placeholder="(000) 000-0000"
           required
           className="flex-1 bg-transparent px-4 py-3 text-sm text-[#f4f1eb] placeholder-[#f4f1eb]/20 outline-none"
-          style={{ fontFamily: "var(--font-barlow)" }}
+          style={{ fontFamily: "var(--font-oswald)" }}
         />
         <button
           type="submit"
@@ -58,7 +58,7 @@ export default function PhoneSignup() {
         </button>
       </div>
       {status === "error" && (
-        <p className="text-red-400 text-xs text-center" style={{ fontFamily: "var(--font-barlow)" }}>
+        <p className="text-red-400 text-xs text-center" style={{ fontFamily: "var(--font-oswald)" }}>
           {message}
         </p>
       )}

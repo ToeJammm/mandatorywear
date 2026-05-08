@@ -43,7 +43,7 @@ export default function ProductDetail({ product }: Props) {
         <Link
           href="/"
           className="text-[10px] tracking-[0.3em] text-[#f4f1eb]/40 hover:text-[#4b5320] transition-colors uppercase"
-          style={{ fontFamily: "var(--font-barlow)" }}
+          style={{ fontFamily: "var(--font-oswald)" }}
         >
           ← Back
         </Link>
@@ -62,7 +62,7 @@ export default function ProductDetail({ product }: Props) {
               />
             ) : (
               <div className="w-full h-full flex items-center justify-center">
-                <span className="text-[#4b5320]/30 text-xs tracking-widest uppercase" style={{ fontFamily: "var(--font-barlow)" }}>
+                <span className="text-[#4b5320]/30 text-xs tracking-widest uppercase" style={{ fontFamily: "var(--font-oswald)" }}>
                   No image
                 </span>
               </div>
@@ -100,7 +100,7 @@ export default function ProductDetail({ product }: Props) {
             {isSoldOut && (
               <span
                 className="border border-[#f4f1eb]/20 text-[#f4f1eb]/40 text-[10px] tracking-[0.25em] px-3 py-1 uppercase"
-                style={{ fontFamily: "var(--font-barlow)" }}
+                style={{ fontFamily: "var(--font-oswald)" }}
               >
                 Sold Out
               </span>
@@ -116,7 +116,7 @@ export default function ProductDetail({ product }: Props) {
             </h1>
             <p
               className="text-2xl text-[#4b5320]"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             >
               ${(product.price / 100).toFixed(2)}
             </p>
@@ -126,7 +126,7 @@ export default function ProductDetail({ product }: Props) {
 
           <p
             className="text-[#f4f1eb]/60 text-sm leading-7 tracking-wide"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             {product.description}
           </p>
@@ -134,7 +134,7 @@ export default function ProductDetail({ product }: Props) {
           {!product.isOneOfOne && !isSoldOut && (
             <p
               className="text-[#f4f1eb]/30 text-xs tracking-[0.3em] uppercase"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             >
               {product.quantity} remaining
             </p>
@@ -147,7 +147,7 @@ export default function ProductDetail({ product }: Props) {
                 <div className="flex items-center gap-3">
                   <span
                     className="text-xs tracking-[0.3em] text-[#f4f1eb]/40 uppercase"
-                    style={{ fontFamily: "var(--font-barlow)" }}
+                    style={{ fontFamily: "var(--font-oswald)" }}
                   >
                     Qty
                   </span>
@@ -160,7 +160,7 @@ export default function ProductDetail({ product }: Props) {
                     </button>
                     <span
                       className="px-4 py-2 text-sm text-[#f4f1eb] border-x border-[#4b5320]/40 min-w-[3rem] text-center"
-                      style={{ fontFamily: "var(--font-barlow)" }}
+                      style={{ fontFamily: "var(--font-oswald)" }}
                     >
                       {qty}
                     </span>

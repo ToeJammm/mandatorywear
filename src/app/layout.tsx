@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Black_Ops_One, Barlow_Condensed } from "next/font/google";
+import { Black_Ops_One, Oswald } from "next/font/google";
 import "./globals.css";
 
 const blackOps = Black_Ops_One({
@@ -8,9 +8,9 @@ const blackOps = Black_Ops_One({
   subsets: ["latin"],
 });
 
-const barlow = Barlow_Condensed({
-  weight: ["300", "400", "600"],
-  variable: "--font-barlow",
+const oswald = Oswald({
+  weight: ["400", "500", "600"],
+  variable: "--font-oswald",
   subsets: ["latin"],
 });
 
@@ -28,7 +28,7 @@ export default function RootLayout({
   children,
 }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="en" className={`${blackOps.variable} ${barlow.variable} h-full`}>
+    <html lang="en" className={`${blackOps.variable} ${oswald.variable} h-full`}>
       <body className="min-h-full flex flex-col bg-black text-[#f4f1eb]">
         {children}
       </body>

@@ -72,7 +72,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
   const label = (text: string) => (
     <span
       className="text-[10px] tracking-[0.35em] text-[#4b5320] uppercase"
-      style={{ fontFamily: "var(--font-barlow)" }}
+      style={{ fontFamily: "var(--font-oswald)" }}
     >
       {text}
     </span>
@@ -108,7 +108,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
               onChange={(e) => setName(e.target.value)}
               required
               className={inputClass}
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             />
           </div>
 
@@ -121,7 +121,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
               required
               rows={4}
               className={`${inputClass} resize-none`}
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             />
           </div>
 
@@ -137,7 +137,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
               required
               placeholder="0.00"
               className={inputClass}
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             />
           </div>
 
@@ -153,7 +153,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
                     ? "bg-[#4b5320] border-[#4b5320] text-[#f4f1eb]"
                     : "border-[#4b5320]/30 text-[#f4f1eb]/40"
                 }`}
-                style={{ fontFamily: "var(--font-barlow)" }}
+                style={{ fontFamily: "var(--font-oswald)" }}
               >
                 Limited Qty
               </button>
@@ -165,7 +165,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
                     ? "bg-[#4b5320] border-[#4b5320] text-[#f4f1eb]"
                     : "border-[#4b5320]/30 text-[#f4f1eb]/40"
                 }`}
-                style={{ fontFamily: "var(--font-barlow)" }}
+                style={{ fontFamily: "var(--font-oswald)" }}
               >
                 1 of 1
               </button>
@@ -183,7 +183,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
                 min="0"
                 required
                 className={inputClass}
-                style={{ fontFamily: "var(--font-barlow)" }}
+                style={{ fontFamily: "var(--font-oswald)" }}
               />
             </div>
           )}
@@ -204,7 +204,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
               onClick={() => fileRef.current?.click()}
               disabled={uploading}
               className="border border-dashed border-[#4b5320]/40 py-6 text-[10px] tracking-[0.3em] uppercase text-[#4b5320]/60 hover:border-[#4b5320] hover:text-[#4b5320] transition-colors disabled:opacity-50 cursor-pointer"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             >
               {uploading ? "Uploading..." : "+ Upload Photos"}
             </button>
@@ -228,7 +228,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
           </div>
 
           {error && (
-            <p className="text-red-400 text-xs" style={{ fontFamily: "var(--font-barlow)" }}>
+            <p className="text-red-400 text-xs" style={{ fontFamily: "var(--font-oswald)" }}>
               {error}
             </p>
           )}
@@ -238,7 +238,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
               type="button"
               onClick={onClose}
               className="flex-1 border border-[#4b5320]/30 py-3 text-xs tracking-[0.2em] uppercase text-[#f4f1eb]/40 hover:text-[#f4f1eb] transition-colors cursor-pointer"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             >
               Cancel
             </button>

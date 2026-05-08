@@ -70,7 +70,7 @@ export default function DropCountdown({ dropDate }: Props) {
             <div className="border border-[#4b5320]/40 p-8">
               <p
                 className="text-center text-[#4b5320] text-xs tracking-[0.4em] mb-8 uppercase"
-                style={{ fontFamily: "var(--font-barlow)" }}
+                style={{ fontFamily: "var(--font-oswald)" }}
               >
                 Next Drop
               </p>
@@ -90,7 +90,7 @@ export default function DropCountdown({ dropDate }: Props) {
                     </span>
                     <span
                       className="text-[10px] tracking-[0.3em] text-[#4b5320]"
-                      style={{ fontFamily: "var(--font-barlow)" }}
+                      style={{ fontFamily: "var(--font-oswald)" }}
                     >
                       {label}
                     </span>
@@ -104,7 +104,7 @@ export default function DropCountdown({ dropDate }: Props) {
         {!dropDate && (
           <p
             className="text-[#4b5320] text-sm tracking-[0.3em] uppercase"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             Coming Soon
           </p>
@@ -115,7 +115,7 @@ export default function DropCountdown({ dropDate }: Props) {
           <div className="flex-1 h-px bg-[#4b5320]/40" />
           <span
             className="text-[#4b5320] text-xs tracking-[0.3em]"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             ★
           </span>
@@ -126,7 +126,7 @@ export default function DropCountdown({ dropDate }: Props) {
         <div className="w-full">
           <p
             className="text-center text-[#f4f1eb]/60 text-xs tracking-[0.3em] uppercase mb-6"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             Get notified when we drop
           </p>

@@ -17,7 +17,7 @@ export default function SuccessPage() {
         </h1>
         <p
           className="text-sm text-[#f4f1eb]/50 tracking-wide leading-7"
-          style={{ fontFamily: "var(--font-barlow)" }}
+          style={{ fontFamily: "var(--font-oswald)" }}
         >
           You'll receive a confirmation email shortly. Thank you for your support.
         </p>
@@ -26,7 +26,7 @@ export default function SuccessPage() {
       <Link
         href="/"
         className="text-[10px] tracking-[0.4em] uppercase text-[#4b5320] hover:text-[#5c6628] transition-colors"
-        style={{ fontFamily: "var(--font-barlow)" }}
+        style={{ fontFamily: "var(--font-oswald)" }}
       >
         ← Back to Shop
       </Link>

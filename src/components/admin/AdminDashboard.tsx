@@ -73,7 +73,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
   const label = (text: string) => (
     <span
       className="text-[10px] tracking-[0.35em] text-[#4b5320] uppercase"
-      style={{ fontFamily: "var(--font-barlow)" }}
+      style={{ fontFamily: "var(--font-oswald)" }}
     >
       {text}
     </span>
@@ -87,7 +87,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
           <Image src="/logo.jpg" alt="Mandatory Wear" width={80} height={80} className="w-16 h-auto invert" />
           <span
             className="text-xs tracking-[0.3em] text-[#4b5320] uppercase"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             Admin
           </span>
@@ -97,14 +97,14 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
             href="/"
             target="_blank"
             className="text-[10px] tracking-[0.3em] text-[#f4f1eb]/30 hover:text-[#f4f1eb]/60 uppercase transition-colors"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             View Site ↗
           </a>
           <button
             onClick={logout}
             className="text-[10px] tracking-[0.3em] text-[#f4f1eb]/30 hover:text-red-400 uppercase transition-colors cursor-pointer"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             Logout
           </button>
@@ -136,7 +136,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
           <div className="flex items-center justify-between border border-[#4b5320]/20 px-6 py-4">
             <div>
               {label("Drop Notification")}
-              <p className="text-[#f4f1eb]/30 text-xs mt-1" style={{ fontFamily: "var(--font-barlow)" }}>
+              <p className="text-[#f4f1eb]/30 text-xs mt-1" style={{ fontFamily: "var(--font-oswald)" }}>
                 Send a live email to all {signupCount} subscriber{signupCount !== 1 ? "s" : ""}
               </p>
             </div>
@@ -165,7 +165,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
                 value={dropDate}
                 onChange={(e) => setDropDate(e.target.value)}
                 className="bg-transparent border border-[#4b5320]/40 px-4 py-2.5 text-sm text-[#f4f1eb] outline-none focus:border-[#4b5320] transition-colors"
-                style={{ fontFamily: "var(--font-barlow)", colorScheme: "dark" }}
+                style={{ fontFamily: "var(--font-oswald)", colorScheme: "dark" }}
               />
             </div>
 
@@ -178,7 +178,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
                     ? "border-[#4b5320] bg-[#4b5320]/10 text-[#4b5320]"
                     : "border-[#4b5320]/30 text-[#f4f1eb]/40"
                 }`}
-                style={{ fontFamily: "var(--font-barlow)" }}
+                style={{ fontFamily: "var(--font-oswald)" }}
               >
                 <div
                   className={`w-3 h-3 rounded-full transition-colors ${
@@ -207,7 +207,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
             <button
               onClick={() => { setEditProduct(null); setShowForm(true); }}
               className="text-[10px] tracking-[0.3em] uppercase text-[#4b5320] hover:text-[#5c6628] transition-colors cursor-pointer"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             >
               + Add Product
             </button>
@@ -216,7 +216,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
           {products.length === 0 && (
             <p
               className="text-[#f4f1eb]/30 text-sm tracking-wide"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             >
               No products yet.
             </p>
@@ -246,14 +246,14 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
                   <div className="flex items-center gap-3 mt-1">
                     <span
                       className="text-xs text-[#4b5320]"
-                      style={{ fontFamily: "var(--font-barlow)" }}
+                      style={{ fontFamily: "var(--font-oswald)" }}
                     >
                       ${(product.price / 100).toFixed(2)}
                     </span>
                     {product.isOneOfOne && (
                       <span
                         className="text-[9px] tracking-widest text-[#4b5320] uppercase border border-[#4b5320]/50 px-1.5 py-px"
-                        style={{ fontFamily: "var(--font-barlow)" }}
+                        style={{ fontFamily: "var(--font-oswald)" }}
                       >
                         1 of 1
                       </span>
@@ -261,7 +261,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
                     {product.sold && (
                       <span
                         className="text-[9px] tracking-widest text-[#f4f1eb]/30 uppercase"
-                        style={{ fontFamily: "var(--font-barlow)" }}
+                        style={{ fontFamily: "var(--font-oswald)" }}
                       >
                         Sold
                       </span>
@@ -269,7 +269,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
                     {!product.active && (
                       <span
                         className="text-[9px] tracking-widest text-[#f4f1eb]/20 uppercase"
-                        style={{ fontFamily: "var(--font-barlow)" }}
+                        style={{ fontFamily: "var(--font-oswald)" }}
                       >
                         Hidden
                       </span>
@@ -282,21 +282,21 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
                   <button
                     onClick={() => { setEditProduct(product); setShowForm(true); }}
                     className="text-[10px] tracking-widest text-[#f4f1eb]/30 hover:text-[#f4f1eb] uppercase transition-colors cursor-pointer"
-                    style={{ fontFamily: "var(--font-barlow)" }}
+                    style={{ fontFamily: "var(--font-oswald)" }}
                   >
                     Edit
                   </button>
                   <button
                     onClick={() => toggleProductActive(product)}
                     className="text-[10px] tracking-widest text-[#f4f1eb]/30 hover:text-[#4b5320] uppercase transition-colors cursor-pointer"
-                    style={{ fontFamily: "var(--font-barlow)" }}
+                    style={{ fontFamily: "var(--font-oswald)" }}
                   >
                     {product.active ? "Hide" : "Show"}
                   </button>
                   <button
                     onClick={() => deleteProduct(product.id)}
                     className="text-[10px] tracking-widest text-[#f4f1eb]/20 hover:text-red-400 uppercase transition-colors cursor-pointer"
-                    style={{ fontFamily: "var(--font-barlow)" }}
+                    style={{ fontFamily: "var(--font-oswald)" }}
                   >
                     Del
                   </button>

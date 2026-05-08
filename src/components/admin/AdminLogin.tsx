@@ -38,7 +38,7 @@ export default function AdminLogin() {
         <div className="border border-[#4b5320]/40 p-8">
           <p
             className="text-xs tracking-[0.4em] text-[#4b5320] uppercase mb-6 text-center"
-            style={{ fontFamily: "var(--font-barlow)" }}
+            style={{ fontFamily: "var(--font-oswald)" }}
           >
             Admin Access
           </p>
@@ -50,10 +50,10 @@ export default function AdminLogin() {
               placeholder="Password"
               required
               className="bg-transparent border border-[#4b5320]/40 px-4 py-3 text-sm text-[#f4f1eb] placeholder-[#f4f1eb]/20 outline-none focus:border-[#4b5320] transition-colors"
-              style={{ fontFamily: "var(--font-barlow)" }}
+              style={{ fontFamily: "var(--font-oswald)" }}
             />
             {error && (
-              <p className="text-red-400 text-xs text-center" style={{ fontFamily: "var(--font-barlow)" }}>
+              <p className="text-red-400 text-xs text-center" style={{ fontFamily: "var(--font-oswald)" }}>
                 {error}
               </p>
             )}
