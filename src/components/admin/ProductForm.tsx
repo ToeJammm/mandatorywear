@@ -195,7 +195,7 @@ export default function ProductForm({ product, onClose, onSave }: Props) {
               ref={fileRef}
               type="file"
               multiple
-              accept="image/*"
+              accept="image/*,.heic,.heif"
               className="hidden"
               onChange={(e) => e.target.files && uploadFiles(e.target.files)}
             />
