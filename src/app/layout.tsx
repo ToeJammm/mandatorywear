@@ -29,7 +29,7 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" className={`${blackOps.variable} ${barlow.variable} h-full`}>
-      <body className="min-h-full flex flex-col bg-[#0a0a0a] text-[#f4f1eb]">
+      <body className="min-h-full flex flex-col bg-black text-[#f4f1eb]">
         {children}
       </body>
     </html>

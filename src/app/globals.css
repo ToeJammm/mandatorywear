@@ -26,12 +26,11 @@ body {
 }
 
 body {
-  background-color: var(--black);
-  color: var(--off-white);
+  background-color: #000000;
+  color: #f4f1eb;
   -webkit-font-smoothing: antialiased;
 }
 
-/* Remove number input spinners */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
   -webkit-appearance: none;
