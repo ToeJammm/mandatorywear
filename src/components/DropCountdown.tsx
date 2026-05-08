@@ -53,12 +53,12 @@ export default function DropCountdown({ dropDate }: Props) {
 
       <div className="relative z-10 flex flex-col items-center gap-6 sm:gap-12 max-w-lg w-full">
         {/* Logo */}
-        <div className="w-[26rem] sm:w-[32rem]">
+        <div className="w-full max-w-sm sm:max-w-lg">
           <Image
-            src="/logo.jpg"
+            src="/logo-cropped.jpg"
             alt="Mandatory Wear"
-            width={400}
-            height={400}
+            width={2640}
+            height={1294}
             className="w-full h-auto invert"
             priority
           />
