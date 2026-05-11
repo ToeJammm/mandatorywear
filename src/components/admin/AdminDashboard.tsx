@@ -3,16 +3,19 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import type { Product, Settings } from "@prisma/client";
+import type { Order, Product, Settings } from "@prisma/client";
 import ProductForm from "./ProductForm";
+
+type OrderWithProduct = Order & { product: { name: string } };
 
 interface Props {
   settings: Settings | null;
   products: Product[];
   signupCount: number;
+  orders: OrderWithProduct[];
 }
 
-export default function AdminDashboard({ settings, products, signupCount }: Props) {
+export default function AdminDashboard({ settings, products, signupCount, orders }: Props) {
   const router = useRouter();
   const [dropDate, setDropDate] = useState(
     settings?.dropDate ? new Date(settings.dropDate).toISOString().slice(0, 16) : ""
@@ -24,6 +27,17 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
   const [notifying, setNotifying] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editProduct, setEditProduct] = useState<Product | null>(null);
+
+  async function generateLabel(orderId: string) {
+    const res = await fetch(`/api/admin/orders/${orderId}/label`, { method: "POST" });
+    const data = await res.json();
+    if (res.ok) {
+      window.open(data.labelUrl, "_blank");
+      router.refresh();
+    } else {
+      alert(data.error ?? "Failed to generate label.");
+    }
+  }
 
   async function sendNotification() {
     if (!confirm(`Send drop notification to ${signupCount} subscribers?`)) return;
@@ -341,6 +355,67 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
             ))}
           </div>
         </div>
+      </div>
+
+        {/* Orders */}
+        {orders.length > 0 && (
+          <div className="flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              {label("Orders")}
+            </div>
+            <div className="flex flex-col gap-px bg-[#4b5320]/10">
+              {orders.map((order) => (
+                <div key={order.id} className="bg-[#0a0a0a] p-4 flex flex-col gap-2">
+                  <div className="flex items-start justify-between gap-4">
+                    <div className="flex flex-col gap-0.5">
+                      <p className="text-sm text-[#f4f1eb] tracking-wide" style={{ fontFamily: "var(--font-black-ops)" }}>
+                        {order.product.name}
+                      </p>
+                      <p className="text-xs text-[#f4f1eb]/40" style={{ fontFamily: "var(--font-oswald)" }}>
+                        {order.customerName || order.customerEmail} — ${(order.total / 100).toFixed(2)}
+                      </p>
+                      {order.shippingLine1 && (
+                        <p className="text-xs text-[#f4f1eb]/30 mt-1" style={{ fontFamily: "var(--font-oswald)" }}>
+                          {order.shippingName} · {order.shippingLine1}{order.shippingLine2 ? `, ${order.shippingLine2}` : ""}, {order.shippingCity}, {order.shippingState} {order.shippingZip}
+                        </p>
+                      )}
+                      {order.trackingNumber && (
+                        <p className="text-xs text-[#4b5320] mt-1" style={{ fontFamily: "var(--font-oswald)" }}>
+                          Tracking: {order.trackingNumber}
+                        </p>
+                      )}
+                    </div>
+                    <div className="flex flex-col items-end gap-2 flex-shrink-0">
+                      {order.labelUrl ? (
+                        <a
+                          href={order.labelUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-[10px] tracking-[0.2em] uppercase text-[#4b5320] hover:text-[#5c6628] transition-colors"
+                          style={{ fontFamily: "var(--font-oswald)" }}
+                        >
+                          Download Label
+                        </a>
+                      ) : order.shippingLine1 ? (
+                        <button
+                          onClick={() => generateLabel(order.id)}
+                          className="text-[10px] tracking-[0.2em] uppercase bg-[#4b5320] text-[#f4f1eb] px-3 py-1.5 hover:bg-[#5c6628] transition-colors cursor-pointer"
+                          style={{ fontFamily: "var(--font-oswald)" }}
+                        >
+                          Generate Label
+                        </button>
+                      ) : (
+                        <span className="text-[10px] text-[#f4f1eb]/20 uppercase" style={{ fontFamily: "var(--font-oswald)" }}>
+                          No address
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Product Form Modal */}

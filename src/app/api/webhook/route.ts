@@ -27,15 +27,26 @@ export async function POST(req: NextRequest) {
     const product = await prisma.product.findUnique({ where: { id: productId } });
     if (!product) return NextResponse.json({ ok: true });
 
+    const shipping = session.shipping_details;
+    const name = session.shipping_details?.name ?? session.customer_details?.name ?? "";
+
     await prisma.$transaction([
       prisma.order.create({
         data: {
           stripeSessionId: session.id,
           customerEmail: session.customer_details?.email ?? "",
+          customerName: session.customer_details?.name ?? "",
           productId,
           quantity,
           total: session.amount_total ?? 0,
           status: "paid",
+          shippingName: name,
+          shippingLine1: shipping?.address?.line1 ?? "",
+          shippingLine2: shipping?.address?.line2 ?? "",
+          shippingCity: shipping?.address?.city ?? "",
+          shippingState: shipping?.address?.state ?? "",
+          shippingZip: shipping?.address?.postal_code ?? "",
+          shippingCountry: shipping?.address?.country ?? "",
         },
       }),
       prisma.product.update({

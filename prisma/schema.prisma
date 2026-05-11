@@ -40,10 +40,20 @@ model Order {
   id              String   @id @default(cuid())
   stripeSessionId String   @unique
   customerEmail   String
+  customerName    String?
   productId       String
   quantity        Int
   total           Int
   status          String   @default("pending")
+  shippingName    String?
+  shippingLine1   String?
+  shippingLine2   String?
+  shippingCity    String?
+  shippingState   String?
+  shippingZip     String?
+  shippingCountry String?
+  labelUrl        String?
+  trackingNumber  String?
   createdAt       DateTime @default(now())
   product         Product  @relation(fields: [productId], references: [id])
 }
