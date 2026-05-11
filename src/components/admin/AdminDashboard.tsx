@@ -40,7 +40,7 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
 
   async function saveSettings() {
     setSaving(true);
-    await fetch("/api/admin/settings", {
+    const res = await fetch("/api/admin/settings", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -51,6 +51,11 @@ export default function AdminDashboard({ settings, products, signupCount }: Prop
       }),
     });
     setSaving(false);
+    if (!res.ok) {
+      const data = await res.json().catch(() => ({}));
+      alert(`Failed to save: ${data.error ?? res.status}`);
+      return;
+    }
     router.refresh();
   }
 

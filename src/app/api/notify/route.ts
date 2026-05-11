@@ -21,8 +21,8 @@ export async function POST() {
 
   const resend = getResend();
   const siteUrl = process.env.NEXT_PUBLIC_URL ?? "https://mandatorywear.com";
-  const subject = settings?.emailSubject || "THE DROP IS LIVE";
-  const bodyText = settings?.emailBody || "Limited quantity. First come, first served.";
+  const subject = settings?.emailSubject ?? "THE DROP IS LIVE";
+  const bodyText = settings?.emailBody ?? "Limited quantity. First come, first served.";
 
   const { error } = await resend.batch.send(
     signups.map((s) => ({
