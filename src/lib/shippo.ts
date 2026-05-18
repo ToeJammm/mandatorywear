@@ -1,12 +1,12 @@
 import Shippo from "shippo";
 
-type ShippoClient = InstanceType<typeof Shippo>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+let _shippo: any = null;
 
-let _shippo: ShippoClient | null = null;
-
-export function getShippo(): ShippoClient {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export function getShippo(): any {
   if (!_shippo) {
-    _shippo = new Shippo({ apiKeyHeader: process.env.SHIPPO_API_KEY! });
+    _shippo = new (Shippo as any)({ apiKeyHeader: process.env.SHIPPO_API_KEY! });
   }
   return _shippo;
 }
