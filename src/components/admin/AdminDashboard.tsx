@@ -355,7 +355,6 @@ export default function AdminDashboard({ settings, products, signupCount, orders
             ))}
           </div>
         </div>
-      </div>
 
         {/* Orders */}
         {orders.length > 0 && (
