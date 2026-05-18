@@ -53,7 +53,8 @@ export async function POST(_req: NextRequest, ctx: Ctx) {
   });
 
   // Pick the cheapest USPS rate
-  const rates = shipment.rates ?? [];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const rates: any[] = shipment.rates ?? [];
   const rate = rates
     .filter((r) => r.provider === "USPS")
     .sort((a, b) => parseFloat(a.amount) - parseFloat(b.amount))[0] ?? rates[0];
