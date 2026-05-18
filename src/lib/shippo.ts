@@ -1,8 +1,10 @@
 import Shippo from "shippo";
 
-let _shippo: Shippo | null = null;
+type ShippoClient = InstanceType<typeof Shippo>;
 
-export function getShippo(): Shippo {
+let _shippo: ShippoClient | null = null;
+
+export function getShippo(): ShippoClient {
   if (!_shippo) {
     _shippo = new Shippo({ apiKeyHeader: process.env.SHIPPO_API_KEY! });
   }
