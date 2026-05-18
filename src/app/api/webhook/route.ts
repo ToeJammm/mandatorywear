@@ -18,7 +18,8 @@ export async function POST(req: NextRequest) {
   }
 
   if (event.type === "checkout.session.completed") {
-    const session = event.data.object as Stripe.Checkout.Session;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session = event.data.object as any;
     const productId = session.metadata?.productId;
     const quantity = parseInt(session.metadata?.quantity ?? "1", 10);
 
