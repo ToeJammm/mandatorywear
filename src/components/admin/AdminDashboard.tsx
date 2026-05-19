@@ -27,6 +27,23 @@ export default function AdminDashboard({ settings, products, signupCount, orders
   const [notifying, setNotifying] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editProduct, setEditProduct] = useState<Product | null>(null);
+  const [addressOrderId, setAddressOrderId] = useState<string | null>(null);
+  const [addressFields, setAddressFields] = useState({ shippingName: "", shippingLine1: "", shippingLine2: "", shippingCity: "", shippingState: "", shippingZip: "", shippingCountry: "US" });
+
+  async function saveAddress(orderId: string) {
+    const res = await fetch(`/api/admin/orders/${orderId}/address`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(addressFields),
+    });
+    if (res.ok) {
+      setAddressOrderId(null);
+      router.refresh();
+    } else {
+      const data = await res.json();
+      alert(data.error ?? "Failed to save address.");
+    }
+  }
 
   async function generateLabel(orderId: string) {
     const res = await fetch(`/api/admin/orders/${orderId}/label`, { method: "POST" });
@@ -404,9 +421,13 @@ export default function AdminDashboard({ settings, products, signupCount, orders
                           Generate Label
                         </button>
                       ) : (
-                        <span className="text-[10px] text-[#f4f1eb]/20 uppercase" style={{ fontFamily: "var(--font-oswald)" }}>
-                          No address
-                        </span>
+                        <button
+                          onClick={() => { setAddressOrderId(order.id); setAddressFields({ shippingName: order.customerName ?? "", shippingLine1: "", shippingLine2: "", shippingCity: "", shippingState: "", shippingZip: "", shippingCountry: "US" }); }}
+                          className="text-[10px] tracking-[0.2em] uppercase border border-[#4b5320]/40 text-[#4b5320] px-3 py-1.5 hover:border-[#4b5320] transition-colors cursor-pointer"
+                          style={{ fontFamily: "var(--font-oswald)" }}
+                        >
+                          Enter Address
+                        </button>
                       )}
                     </div>
                   </div>
@@ -416,6 +437,42 @@ export default function AdminDashboard({ settings, products, signupCount, orders
           </div>
         )}
       </div>
+
+      {/* Address Modal */}
+      {addressOrderId && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 px-4">
+          <div className="w-full max-w-sm bg-[#0a0a0a] border border-[#4b5320]/40 p-6 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <span className="text-xs tracking-[0.3em] uppercase text-[#f4f1eb]" style={{ fontFamily: "var(--font-black-ops)" }}>Shipping Address</span>
+              <button onClick={() => setAddressOrderId(null)} className="text-[#f4f1eb]/30 hover:text-[#f4f1eb] cursor-pointer text-lg leading-none">×</button>
+            </div>
+            {[
+              { key: "shippingName", placeholder: "Full name" },
+              { key: "shippingLine1", placeholder: "Address line 1" },
+              { key: "shippingLine2", placeholder: "Address line 2 (optional)" },
+              { key: "shippingCity", placeholder: "City" },
+              { key: "shippingState", placeholder: "State (e.g. TX)" },
+              { key: "shippingZip", placeholder: "ZIP code" },
+            ].map(({ key, placeholder }) => (
+              <input
+                key={key}
+                value={addressFields[key as keyof typeof addressFields]}
+                onChange={(e) => setAddressFields((f) => ({ ...f, [key]: e.target.value }))}
+                placeholder={placeholder}
+                className="bg-transparent border border-[#4b5320]/40 px-4 py-2.5 text-sm text-[#f4f1eb] outline-none focus:border-[#4b5320] transition-colors placeholder-[#f4f1eb]/20 w-full"
+                style={{ fontFamily: "var(--font-oswald)" }}
+              />
+            ))}
+            <button
+              onClick={() => saveAddress(addressOrderId)}
+              className="bg-[#4b5320] py-3 text-xs tracking-[0.2em] uppercase text-[#f4f1eb] hover:bg-[#5c6628] transition-colors cursor-pointer"
+              style={{ fontFamily: "var(--font-black-ops)" }}
+            >
+              Save &amp; Generate Label
+            </button>
+          </div>
+        </div>
+      )}
 
       {/* Product Form Modal */}
       {showForm && (
