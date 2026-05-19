@@ -28,8 +28,10 @@ export async function POST(req: NextRequest) {
     const product = await prisma.product.findUnique({ where: { id: productId } });
     if (!product) return NextResponse.json({ ok: true });
 
+    // shipping_details for card, customer_details.address for Apple Pay
     const shipping = session.shipping_details;
-    const name = session.shipping_details?.name ?? session.customer_details?.name ?? "";
+    const address = shipping?.address ?? session.customer_details?.address;
+    const name = shipping?.name ?? session.customer_details?.name ?? "";
 
     await prisma.$transaction([
       prisma.order.create({
@@ -42,12 +44,12 @@ export async function POST(req: NextRequest) {
           total: session.amount_total ?? 0,
           status: "paid",
           shippingName: name,
-          shippingLine1: shipping?.address?.line1 ?? "",
-          shippingLine2: shipping?.address?.line2 ?? "",
-          shippingCity: shipping?.address?.city ?? "",
-          shippingState: shipping?.address?.state ?? "",
-          shippingZip: shipping?.address?.postal_code ?? "",
-          shippingCountry: shipping?.address?.country ?? "",
+          shippingLine1: address?.line1 ?? "",
+          shippingLine2: address?.line2 ?? "",
+          shippingCity: address?.city ?? "",
+          shippingState: address?.state ?? "",
+          shippingZip: address?.postal_code ?? "",
+          shippingCountry: address?.country ?? "",
         },
       }),
       prisma.product.update({
