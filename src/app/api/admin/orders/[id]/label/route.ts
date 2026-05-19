@@ -23,13 +23,14 @@ export async function POST(_req: NextRequest, ctx: Ctx) {
 
   const shipment = await shippo.shipments.create({
     addressFrom: {
-      name: process.env.SHIP_FROM_NAME!,
-      street1: process.env.SHIP_FROM_ADDRESS!,
-      city: process.env.SHIP_FROM_CITY!,
-      state: process.env.SHIP_FROM_STATE!,
-      zip: process.env.SHIP_FROM_ZIP!,
+      name: process.env.SHIP_FROM_NAME || "Mandatory Wear",
+      street1: process.env.SHIP_FROM_ADDRESS || "",
+      city: process.env.SHIP_FROM_CITY || "",
+      state: process.env.SHIP_FROM_STATE || "",
+      zip: process.env.SHIP_FROM_ZIP || "",
       country: "US",
-      email: process.env.SHIP_FROM_EMAIL!,
+      ...(process.env.SHIP_FROM_EMAIL ? { email: process.env.SHIP_FROM_EMAIL } : {}),
+      ...(process.env.SHIP_FROM_PHONE ? { phone: process.env.SHIP_FROM_PHONE } : {}),
     },
     addressTo: {
       name: order.shippingName ?? order.customerName ?? "",
@@ -39,6 +40,7 @@ export async function POST(_req: NextRequest, ctx: Ctx) {
       state: order.shippingState ?? "",
       zip: order.shippingZip ?? "",
       country: order.shippingCountry ?? "US",
+      email: order.customerEmail,
     },
     parcels: [
       {
