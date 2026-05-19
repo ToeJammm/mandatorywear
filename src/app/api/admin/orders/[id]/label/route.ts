@@ -29,6 +29,7 @@ export async function POST(_req: NextRequest, ctx: Ctx) {
       state: process.env.SHIP_FROM_STATE!,
       zip: process.env.SHIP_FROM_ZIP!,
       country: "US",
+      email: process.env.SHIP_FROM_EMAIL!,
     },
     addressTo: {
       name: order.shippingName ?? order.customerName ?? "",
