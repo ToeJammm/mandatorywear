@@ -15,10 +15,15 @@ interface Props {
   orders: OrderWithProduct[];
 }
 
+function toLocalInputValue(d: Date) {
+  const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 16);
+}
+
 export default function AdminDashboard({ settings, products, signupCount, orders }: Props) {
   const router = useRouter();
   const [dropDate, setDropDate] = useState(
-    settings?.dropDate ? new Date(settings.dropDate).toISOString().slice(0, 16) : ""
+    settings?.dropDate ? toLocalInputValue(new Date(settings.dropDate)) : ""
   );
   const [dropActive, setDropActive] = useState(settings?.dropActive ?? false);
   const [emailSubject, setEmailSubject] = useState(settings?.emailSubject ?? "");
@@ -58,7 +63,8 @@ export default function AdminDashboard({ settings, products, signupCount, orders
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        dropDate: dropDate || null,
+        // datetime-local has no timezone; interpret it in the admin's local time.
+        dropDate: dropDate ? new Date(dropDate).toISOString() : null,
         dropActive,
         emailSubject,
         emailBody,

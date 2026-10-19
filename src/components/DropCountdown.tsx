@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import EmailSignup from "./EmailSignup";
 
 interface Props {
@@ -30,15 +31,24 @@ function pad(n: number) {
 }
 
 export default function DropCountdown({ dropDate }: Props) {
+  const router = useRouter();
   const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
 
   useEffect(() => {
     if (!dropDate) return;
     const target = new Date(dropDate);
-    setTimeLeft(getTimeLeft(target));
-    const id = setInterval(() => setTimeLeft(getTimeLeft(target)), 1000);
+    const tick = () => {
+      setTimeLeft(getTimeLeft(target));
+      if (target.getTime() <= Date.now()) {
+        clearInterval(id);
+        // Re-render the server page so it swaps to the shop.
+        router.refresh();
+      }
+    };
+    const id = setInterval(tick, 1000);
+    tick();
     return () => clearInterval(id);
-  }, [dropDate]);
+  }, [dropDate, router]);
 
   return (
     <main className="flex flex-col items-center justify-center min-h-screen px-6 py-6 sm:py-16 relative overflow-hidden">
