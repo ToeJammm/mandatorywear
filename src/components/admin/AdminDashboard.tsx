@@ -15,6 +15,17 @@ interface Props {
   orders: OrderWithProduct[];
 }
 
+const ADDRESS_FIELDS = [
+  { key: "shippingName", label: "Name", required: true },
+  { key: "shippingLine1", label: "Address Line 1", required: true },
+  { key: "shippingLine2", label: "Address Line 2", required: false },
+  { key: "shippingCity", label: "City", required: true },
+  { key: "shippingState", label: "State", required: true },
+  { key: "shippingZip", label: "ZIP", required: true },
+] as const;
+
+type AddressForm = Record<(typeof ADDRESS_FIELDS)[number]["key"], string>;
+
 function toLocalInputValue(d: Date) {
   const local = new Date(d.getTime() - d.getTimezoneOffset() * 60000);
   return local.toISOString().slice(0, 16);
@@ -32,6 +43,40 @@ export default function AdminDashboard({ settings, products, signupCount, orders
   const [notifying, setNotifying] = useState(false);
   const [showForm, setShowForm] = useState(false);
   const [editProduct, setEditProduct] = useState<Product | null>(null);
+
+  const [editAddressId, setEditAddressId] = useState<string | null>(null);
+  const [addressForm, setAddressForm] = useState<AddressForm | null>(null);
+  const [savingAddress, setSavingAddress] = useState(false);
+
+  function startEditAddress(order: OrderWithProduct) {
+    setEditAddressId(order.id);
+    setAddressForm({
+      shippingName: order.shippingName || order.customerName || "",
+      shippingLine1: order.shippingLine1 ?? "",
+      shippingLine2: order.shippingLine2 ?? "",
+      shippingCity: order.shippingCity ?? "",
+      shippingState: order.shippingState ?? "",
+      shippingZip: order.shippingZip ?? "",
+    });
+  }
+
+  async function saveAddress(e: React.FormEvent, order: OrderWithProduct) {
+    e.preventDefault();
+    setSavingAddress(true);
+    const res = await fetch(`/api/admin/orders/${order.id}/address`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ ...addressForm, shippingCountry: order.shippingCountry || "US" }),
+    });
+    setSavingAddress(false);
+    if (res.ok) {
+      setEditAddressId(null);
+      router.refresh();
+    } else {
+      const data = await res.json().catch(() => null);
+      alert(data?.error ?? "Failed to save address.");
+    }
+  }
 
   async function generateLabel(orderId: string) {
     const res = await fetch(`/api/admin/orders/${orderId}/label`, { method: "POST" });
@@ -384,6 +429,15 @@ export default function AdminDashboard({ settings, products, signupCount, orders
                           {order.shippingName} · {order.shippingLine1}{order.shippingLine2 ? `, ${order.shippingLine2}` : ""}, {order.shippingCity}, {order.shippingState} {order.shippingZip}
                         </p>
                       )}
+                      {order.customerPhone && (
+                        <a
+                          href={`tel:${order.customerPhone}`}
+                          className="text-xs text-[#f4f1eb]/30 hover:text-[#f4f1eb]/60 transition-colors"
+                          style={{ fontFamily: "var(--font-oswald)" }}
+                        >
+                          Phone: {order.customerPhone}
+                        </a>
+                      )}
                       {order.trackingNumber && (
                         <p className="text-xs text-[#4b5320] mt-1" style={{ fontFamily: "var(--font-oswald)" }}>
                           Tracking: {order.trackingNumber}
@@ -402,16 +456,60 @@ export default function AdminDashboard({ settings, products, signupCount, orders
                           Download Label
                         </a>
                       ) : (
-                        <button
-                          onClick={() => generateLabel(order.id)}
-                          className="text-[10px] tracking-[0.2em] uppercase bg-[#4b5320] text-[#f4f1eb] px-3 py-1.5 hover:bg-[#5c6628] transition-colors cursor-pointer"
-                          style={{ fontFamily: "var(--font-oswald)" }}
-                        >
-                          Generate Label
-                        </button>
+                        <>
+                          <button
+                            onClick={() => generateLabel(order.id)}
+                            className="text-[10px] tracking-[0.2em] uppercase bg-[#4b5320] text-[#f4f1eb] px-3 py-1.5 hover:bg-[#5c6628] transition-colors cursor-pointer"
+                            style={{ fontFamily: "var(--font-oswald)" }}
+                          >
+                            Generate Label
+                          </button>
+                          <button
+                            onClick={() => startEditAddress(order)}
+                            className="text-[10px] tracking-[0.2em] uppercase text-[#f4f1eb]/40 hover:text-[#f4f1eb]/70 transition-colors cursor-pointer"
+                            style={{ fontFamily: "var(--font-oswald)" }}
+                          >
+                            Edit Address
+                          </button>
+                        </>
                       )}
                     </div>
                   </div>
+                  {editAddressId === order.id && addressForm && (
+                    <form onSubmit={(e) => saveAddress(e, order)} className="grid grid-cols-1 sm:grid-cols-2 gap-3 mt-2">
+                      {ADDRESS_FIELDS.map((field) => (
+                        <div key={field.key} className="flex flex-col gap-2">
+                          {label(field.label)}
+                          <input
+                            type="text"
+                            required={field.required}
+                            value={addressForm[field.key]}
+                            onChange={(e) => setAddressForm({ ...addressForm, [field.key]: e.target.value })}
+                            className="bg-transparent border border-[#4b5320]/40 px-4 py-2.5 text-sm text-[#f4f1eb] outline-none focus:border-[#4b5320] transition-colors"
+                            style={{ fontFamily: "var(--font-oswald)" }}
+                          />
+                        </div>
+                      ))}
+                      <div className="sm:col-span-2 flex justify-end gap-3">
+                        <button
+                          type="button"
+                          onClick={() => setEditAddressId(null)}
+                          className="text-[10px] tracking-[0.2em] uppercase text-[#f4f1eb]/40 hover:text-[#f4f1eb]/70 transition-colors cursor-pointer"
+                          style={{ fontFamily: "var(--font-oswald)" }}
+                        >
+                          Cancel
+                        </button>
+                        <button
+                          type="submit"
+                          disabled={savingAddress}
+                          className="text-[10px] tracking-[0.2em] uppercase bg-[#4b5320] text-[#f4f1eb] px-3 py-1.5 hover:bg-[#5c6628] transition-colors cursor-pointer disabled:opacity-50"
+                          style={{ fontFamily: "var(--font-oswald)" }}
+                        >
+                          {savingAddress ? "Saving..." : "Save Address"}
+                        </button>
+                      </div>
+                    </form>
+                  )}
                 </div>
               ))}
             </div>

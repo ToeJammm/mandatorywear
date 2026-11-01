@@ -41,6 +41,7 @@ model Order {
   stripeSessionId String   @unique
   customerEmail   String
   customerName    String?
+  customerPhone   String?
   productId       String
   quantity        Int
   total           Int

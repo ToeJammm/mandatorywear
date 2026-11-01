@@ -39,6 +39,7 @@ export async function POST(req: NextRequest) {
           stripeSessionId: session.id,
           customerEmail: session.customer_details?.email ?? "",
           customerName: session.customer_details?.name ?? "",
+          customerPhone: session.customer_details?.phone ?? null,
           productId,
           quantity,
           total: session.amount_total ?? 0,
